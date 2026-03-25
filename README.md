@@ -12,6 +12,12 @@ This repository contains documentation, operational guides, and AI workflow know
 | `claude/epics/` | Claude-optimized briefings for active Bento epics |
 | `docs/` | Generated project documents (reference guides, meeting outputs, stakeholder artifacts) |
 
+## Generated Documents
+
+| File | Description | Date |
+|------|-------------|------|
+| [`docs/releases/bento-4.0.0-release-report.md`](docs/releases/bento-4.0.0-release-report.md) | Bento 4.0.0 release completion report and Bento X roadmap — full Jira-sourced breakdown of all completed work, bugs fixed, open QA tests, and roadmap items | 2026-03-25 |
+
 ## Related Repositories
 
 - [`bento-frontend`](https://github.com/CBIIT/bento-frontend) — React frontend

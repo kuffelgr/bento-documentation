@@ -17,6 +17,7 @@ This repository contains documentation, operational guides, and AI workflow know
 | File | Description | Date |
 |------|-------------|------|
 | [`docs/releases/bento-3.6.0-release-report.md`](docs/releases/bento-3.6.0-release-report.md) | Bento 3.6.0 release completion report — full Jira-sourced breakdown of all completed work, bugs fixed (63), open QA tests, and cancelled/deferred items | 2026-03-25 |
+| [`docs/releases/bento-3.9.0-release-report.md`](docs/releases/bento-3.9.0-release-report.md) | Bento 3.9.0 release completion report — A&A feature completion, backend ES migration, bugs fixed (13), open QA tests (3), and cancelled items | 2026-03-25 |
 | [`docs/releases/bento-4.0.0-release-report.md`](docs/releases/bento-4.0.0-release-report.md) | Bento 4.0.0 release completion report and Bento X roadmap — full Jira-sourced breakdown of all completed work, bugs fixed, open QA tests, and roadmap items | 2026-03-25 |
 
 ## Related Repositories

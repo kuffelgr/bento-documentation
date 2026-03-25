@@ -249,6 +249,7 @@ const digest = digestData.d.GetContextWebInformation.FormDigestValue;
 | Bento SharePoint | https://nih.sharepoint.com/sites/NCI-CBIIT-FNL-Bento/SitePages/ProjectHome.aspx |
 | CRDC Overview | https://datascience.cancer.gov/data-commons |
 | Bento Help Desk | mailto:bento-help@nih.gov |
+| Bento Documentation Repo | https://github.com/kuffelgr/bento-documentation |
 
 ---
 
@@ -259,19 +260,59 @@ const digest = digestData.d.GetContextWebInformation.FormDigestValue;
 > Loading all files upfront consumes context window space before any real work begins.
 > Fetch the relevant file(s) only when a task genuinely requires that context.
 
-The `claude/` folder is a structured knowledge base. It stores things Jira and SharePoint cannot: decisions, rationale, conventions, and epic briefings optimized for Claude to read quickly.
+The `claude/` folder is a structured knowledge base. It stores things Jira and SharePoint cannot: decisions, rationale, conventions, and epic briefings optimized for Claude to read quickly. The `docs/` folder stores all generated project documents as Markdown files.
 
 ### Folder Structure
 
 ```
 claude/
-  SKILL.md           <- This file. SOPs, JQL, doc standards, reference links.
-  epics/             <- One .md file per active epic. Claude-optimized briefings.
-  decisions/         <- Scope, architecture, and process decision records.
-  conventions/       <- Team conventions Claude applies automatically.
+  SKILL.md              <- This file. SOPs, JQL, doc standards, reference links.
+  epics/                <- One .md file per active epic. Claude-optimized briefings.
+  decisions/            <- Scope, architecture, and process decision records.
+  conventions/          <- Team conventions Claude applies automatically.
 docs/
-  *.docx             <- Generated project documents (reference guides, stakeholder artifacts).
+  releases/             <- Release reports and changelogs. One file per version.
+                           Naming: bento-X.X.X-release-report.md
+  meetings/             <- Meeting notes and action item summaries.
+                           Naming: YYYY-MM-DD-[meeting-type].md
+  stakeholder/          <- Executive summaries, one-pagers, external-facing artifacts.
+                           Naming: YYYY-MM-DD-[description].md
+  epics/                <- Epic-level summaries generated for stakeholders.
+                           Naming: BENTO-XXXX-[epic-slug].md
+README.md               <- Index of all generated docs. Always updated when a new doc is pushed.
 ```
+
+### Generated Documents Convention
+
+**Every document Claude generates must be:**
+
+1. **Stored as a `.md` file** in the appropriate `docs/` subfolder (see structure above).
+2. **Named consistently** using the patterns above — lowercase, hyphens, no spaces.
+3. **Registered in `README.md`** — add a row to the "Generated Documents" table with the file path, a one-line description, and the date.
+4. **Committed to `main`** via the GitHub MCP in the same session it is created, not deferred to later.
+
+**Subfolder selection guide:**
+
+| What you're generating | Where it goes |
+|---|---|
+| Release report, changelog, version summary | `docs/releases/` |
+| Meeting notes, action items | `docs/meetings/` |
+| Executive summary, one-pager, stakeholder brief | `docs/stakeholder/` |
+| Epic status summary for external audience | `docs/epics/` |
+| Anything that doesn't fit above | `docs/` root with a descriptive name |
+
+**Example commit messages:**
+```
+docs: add Bento 4.0.0 release report and Bento X roadmap
+docs: add 2026-03-25 sprint planning meeting notes
+docs: add BENTO-2617 Webpack upgrade stakeholder summary
+```
+
+### Existing Generated Documents
+
+| File | Description | Date |
+|------|-------------|------|
+| [`docs/releases/bento-4.0.0-release-report.md`](../docs/releases/bento-4.0.0-release-report.md) | Bento 4.0.0 release completion report and Bento X roadmap — full Jira-sourced breakdown of all completed work, bugs fixed, open QA tests, and roadmap items | 2026-03-25 |
 
 ### Fetch Strategy by Session Type
 
@@ -281,6 +322,7 @@ docs/
 | Sprint planning or retrospective | `claude/conventions/workflow.md` |
 | New session after a long gap | `claude/conventions/workflow.md` |
 | Scope or deferral question | Relevant file under `claude/decisions/` |
+| Reviewing a prior release or roadmap | `docs/releases/bento-X.X.X-release-report.md` |
 | Quick one-off ticket work | No fetch needed — pull live from Jira |
 
 ### How to Add New Files
@@ -288,15 +330,17 @@ docs/
 - **New epic created?** Generate `claude/epics/BENTO-XXXX.md` alongside the Jira tickets.
 - **Scope or process decision made?** Add a `claude/decisions/YYYY-MM-topic.md` entry.
 - **Team convention changes?** Update `claude/conventions/workflow.md`.
-- **New generated doc?** Add to `docs/` and note it in the README.
+- **New generated document?** Place in the correct `docs/` subfolder, follow the naming convention, and register it in `README.md`. See the Generated Documents Convention above.
 
 ---
 
 ## 10. Maintenance Notes
 
-- This file lives at `CBIIT/bento-documentation/claude/SKILL.md`
+- This file lives at `kuffelgr/bento-documentation/claude/SKILL.md`
 - Update JQL recipes when Jira workflow statuses change
 - Update Reference Links when new repos or resources are added
 - Review stakeholder doc standards before each major release cycle
 - New SOPs or workflow patterns discovered in Claude conversations should be added here
 - When new files are added to `claude/`, update Section 9 so they remain discoverable
+- When a new `docs/` subfolder is created, add it to the folder structure diagram in Section 9
+- The "Existing Generated Documents" table in Section 9 is a quick-reference index; the canonical index is `README.md` at the repo root — keep both in sync
